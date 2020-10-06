@@ -18,6 +18,6 @@ public class PointWaterPipeline {
     private Integer id;
     private Integer x;
     private Integer y;
-    private Boolean trueFalse;
+    private String trueFalse;
     private Integer result;
 }
