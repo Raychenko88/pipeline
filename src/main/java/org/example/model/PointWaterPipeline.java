@@ -20,4 +20,9 @@ public class PointWaterPipeline {
     private Integer y;
     private String trueFalse;
     private Integer result;
+
+    @Override
+    public String toString() {
+        return String.format(getTrueFalse(), (getResult()==null ? "" :  getResult().toString()));
+    }
 }

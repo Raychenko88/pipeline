@@ -1,5 +1,6 @@
 package org.example.sevice.impl;
 
+import com.opencsv.CSVWriter;
 import lombok.RequiredArgsConstructor;
 import org.example.model.PointWaterPipeline;
 import org.example.model.WaterPipeline;
@@ -7,6 +8,9 @@ import org.example.sevice.PointWaterPipelineService;
 import org.example.sevice.WaterPipelineService;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +20,23 @@ public class WriteAndParsingCsv {
     private final PointWaterPipelineService pointWaterPipelineService;
     private final WaterPipelineService waterPipelineService;
 
-    String[] findResult(){
-        List<Integer> listLengths = new ArrayList<>();
+    void writeToCsv() throws IOException {
+        List<PointWaterPipeline> list = findResult();
+        String[] record = new String[list.size()];
+        String csv = "result.csv";
+        CSVWriter writer = new CSVWriter(new FileWriter(csv));
+        for (int i = 0; i < list.size(); i++){
+            record[i] = list.get(i).toString();
+        }
+        writer.writeNext(record);
+        writer.close();
+    }
+
+    List<PointWaterPipeline> findResult(){
         List<PointWaterPipeline> listPointWaterPipelines = pointWaterPipelineService.findAll();
 
         for (PointWaterPipeline pointWaterPipeline : listPointWaterPipelines){
+            List<Integer> listLengths = new ArrayList<>();
             List<WaterPipeline> listWaterPipelines = waterPipelineService.findAll();
             int x = pointWaterPipeline.getX();
             int y = pointWaterPipeline.getY();
@@ -41,9 +57,11 @@ public class WriteAndParsingCsv {
                     }
                 }
             }
-            pointWaterPipeline.setResult(minLength(listLengths));
+            if (!listLengths.isEmpty()){
+                pointWaterPipeline.setResult(minLength(listLengths));
+            }
         }
-        return null;
+        return listPointWaterPipelines;
     }
 
     Integer minLength(List<Integer> list){
