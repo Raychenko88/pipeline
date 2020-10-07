@@ -9,6 +9,10 @@ spring:
       connectionTimeout: 20000
       maximumPoolSize: 5
       driver-class-name: "org.h2.Driver"
+  mvc:
+    view:
+      suffix: .jsp
+      prefix: /WEB-INF/jsp/
   jpa:
     show-sql: true
     hibernate:
