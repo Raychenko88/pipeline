@@ -19,4 +19,9 @@ public class WaterPipeline {
     private Integer x;
     private Integer y;
     private Integer length;
+
+    @Override
+    public String toString() {
+        return String.format(getX().toString(), String.format(getY().toString(), String.format(getLength().toString())));
+    }
 }

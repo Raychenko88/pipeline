@@ -7,11 +7,11 @@
     <title>Main Page</title>
 </head>
 <body>
-<h2><c:out value="${message}" default="Specify the path to the csv file with water pipes data"></c:out></h2>
+<h2>Specify the path to the csv file with water pipes data</h2>
 <br>
 <br>
-<form action="/water-pipeline" method="put">
-    <input type="text" size="30" name="Enter the path to the file" required/>
+<form action="/water-pipeline" method="post">
+    <input type="text" size="30" name="filePath" placeholder="Enter the path to the file" required/>
     <br>
     <input type="submit" value="ENTER"/>
 </form>

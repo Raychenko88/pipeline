@@ -3,7 +3,6 @@ package org.example.sevice.impl;
 import lombok.RequiredArgsConstructor;
 import org.example.dao.PointWaterPipelineDAO;
 import org.example.model.PointWaterPipeline;
-import org.example.model.WaterPipeline;
 import org.example.sevice.PointWaterPipelineService;
 import org.springframework.stereotype.Service;
 

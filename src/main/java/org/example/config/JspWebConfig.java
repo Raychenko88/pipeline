@@ -16,6 +16,7 @@ public class JspWebConfig implements WebMvcConfigurer {
     public void addViewControllers (ViewControllerRegistry registry) {
         registry.addViewController("/water-pipeline").setViewName("index");
         registry.addViewController("/point").setViewName("point");
+        registry.addViewController("/result").setViewName("result");
         registry.addViewController("/").setViewName("index");
     }
 

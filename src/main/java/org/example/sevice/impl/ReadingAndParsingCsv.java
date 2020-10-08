@@ -54,7 +54,7 @@ public class ReadingAndParsingCsv {
         File file = new File(filePath);
         try {
             if (checkFileName(file).equals("csv")) {
-                CSVReader reader = new CSVReader(new FileReader(file.getName()));
+                CSVReader reader = new CSVReader(new FileReader(file.getAbsolutePath()));
                 //Read CSV line by line and use the string array as you want
                 String[] nextLine;
                 while ((nextLine = reader.readNext()) != null) {

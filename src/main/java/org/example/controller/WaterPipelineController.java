@@ -12,15 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@Profile("jsp")
 @RequiredArgsConstructor
 @RequestMapping(value = "water-pipeline")
 public class WaterPipelineController {
 
     private final WaterPipelineService waterPipelineService;
 
-    @PutMapping
-    public String save(@RequestBody String filePath) {
+    @PostMapping
+    public String save(@RequestParam String filePath) {
         waterPipelineService.save(filePath);
         return "point";
     }

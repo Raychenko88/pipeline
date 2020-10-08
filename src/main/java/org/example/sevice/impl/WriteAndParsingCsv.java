@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -20,7 +21,7 @@ public class WriteAndParsingCsv {
     private final PointWaterPipelineService pointWaterPipelineService;
     private final WaterPipelineService waterPipelineService;
 
-    void writeToCsv() throws IOException {
+    public void writeToCsv() throws IOException {
         List<PointWaterPipeline> list = findResult();
         String[] record = new String[list.size()];
         String csv = "result.csv";
@@ -32,7 +33,7 @@ public class WriteAndParsingCsv {
         writer.close();
     }
 
-    List<PointWaterPipeline> findResult(){
+    public List<PointWaterPipeline> findResult(){
         List<PointWaterPipeline> listPointWaterPipelines = pointWaterPipelineService.findAll();
 
         for (PointWaterPipeline pointWaterPipeline : listPointWaterPipelines){
@@ -48,10 +49,10 @@ public class WriteAndParsingCsv {
                                 && !listWaterPipelines.get(i).getId().equals(waterPipeline.getId())){
                             if (listWaterPipelines.get(i).getY().equals(y)){
                                 listLengths.add(waterPipeline.getLength() + listWaterPipelines.get(i).getLength());
-                                pointWaterPipeline.setTrueFalse("TRUE");
+                                pointWaterPipeline.setTrueFalse("TRUE;");
                                 listWaterPipelines.remove(listWaterPipelines.get(i));
                             }else {
-                                pointWaterPipeline.setTrueFalse("FALSE");
+                                pointWaterPipeline.setTrueFalse("FALSE;");
                             }
                         }
                     }
@@ -63,6 +64,13 @@ public class WriteAndParsingCsv {
         }
         return listPointWaterPipelines;
     }
+
+//    public void getResult(){
+//        List<PointWaterPipeline> list= findResult();
+//        for (int i = 0; i < list.size(); i++){
+//            System.out.println(list.get(i).toString());
+//        }
+//    }
 
     Integer minLength(List<Integer> list){
         int min = list.get(0);
