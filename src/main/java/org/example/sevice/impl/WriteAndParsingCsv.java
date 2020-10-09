@@ -25,15 +25,18 @@ public class WriteAndParsingCsv {
         List<PointWaterPipeline> list = findResult();
         String[] record = new String[list.size()];
         String csv = "result.csv";
-        CSVWriter writer = new CSVWriter(new FileWriter(csv));
-        for (int i = 0; i < list.size(); i++){
-            record[i] = list.get(i).toString();
+        File file = new File(csv);
+        FileWriter fileWriter = new FileWriter(file);
+        CSVWriter writer = new CSVWriter(fileWriter);
+        record[0] = "ROUTE EXISTS;MIN LENGTH" + "/n";
+        for (int i = 1; i < list.size(); i++){
+            record[i] = list.get(i).toString() + "/n";
         }
         writer.writeNext(record);
         writer.close();
     }
 
-    public List<PointWaterPipeline> findResult(){
+    List<PointWaterPipeline> findResult(){
         List<PointWaterPipeline> listPointWaterPipelines = pointWaterPipelineService.findAll();
 
         for (PointWaterPipeline pointWaterPipeline : listPointWaterPipelines){
@@ -65,12 +68,17 @@ public class WriteAndParsingCsv {
         return listPointWaterPipelines;
     }
 
-//    public void getResult(){
-//        List<PointWaterPipeline> list= findResult();
-//        for (int i = 0; i < list.size(); i++){
-//            System.out.println(list.get(i).toString());
-//        }
-//    }
+    public String getResult(){
+        List<String> points = new ArrayList<>();
+        for (PointWaterPipeline p : findResult()){
+            points.add(p.toString());
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String s : points){
+            stringBuilder.append(s);
+        }
+        return stringBuilder.toString();
+    }
 
     Integer minLength(List<Integer> list){
         int min = list.get(0);

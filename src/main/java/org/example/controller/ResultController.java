@@ -26,15 +26,7 @@ public class ResultController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        List<String> points = new ArrayList<>();
-        for (PointWaterPipeline p : writeAndParsingCsv.findResult()){
-            points.add(p.toString());
-        }
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String s : points){
-            stringBuilder.append(s);
-        }
-        model.addAttribute("message", stringBuilder.toString());
+        model.addAttribute("message", writeAndParsingCsv.getResult());
         return "water-pipeline";
     }
 }
