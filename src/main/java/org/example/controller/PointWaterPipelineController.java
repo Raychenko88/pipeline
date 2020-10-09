@@ -24,8 +24,14 @@ public class PointWaterPipelineController {
     private final WriteAndParsingCsv writeAndParsingCsv;
 
     @PostMapping
-    public String save(@RequestParam String filePath) {
+    public String save(@RequestParam String filePath, Model model) {
         pointWaterPipelineService.save(filePath);
+        try {
+            writeAndParsingCsv.writeToCsv();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("message", writeAndParsingCsv.getResult());
         return "result";
     }
 

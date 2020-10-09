@@ -7,10 +7,11 @@
     <title>Result Page</title>
 </head>
 <body>
-<form action="/result" method="get">
+<h2>In the file path, the file name must end with .tsv</h2>
     <br>
-    <h2><c:out value="${message}" default="Result"/></h2>
-</form>
+    <h3><c:out value="${message}" default="Result"/></h3>
+    <br>
+    <a href="/">Go to start</a>
 <br>
 </body>
 </html>

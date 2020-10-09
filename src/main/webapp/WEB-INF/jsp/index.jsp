@@ -8,6 +8,7 @@
 </head>
 <body>
 <h2>Specify the path to the csv file with water pipes data</h2>
+<h2>In the file path, the file name must end with .tsv</h2>
 <br>
 <br>
 <form action="/water-pipeline" method="post">

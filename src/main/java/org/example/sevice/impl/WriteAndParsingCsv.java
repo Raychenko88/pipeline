@@ -21,69 +21,74 @@ public class WriteAndParsingCsv {
     private final PointWaterPipelineService pointWaterPipelineService;
     private final WaterPipelineService waterPipelineService;
 
+
     public void writeToCsv() throws IOException {
         List<PointWaterPipeline> list = findResult();
         String[] record = new String[list.size()];
-        String csv = "result.csv";
+        String csv =
+                System.getProperty("user.dir") +
+                        System.getProperty("file.separator") +
+                        "files" +
+                        System.getProperty("file.separator") +
+                        "result.csv";
         File file = new File(csv);
         FileWriter fileWriter = new FileWriter(file);
         CSVWriter writer = new CSVWriter(fileWriter);
         record[0] = "ROUTE EXISTS;MIN LENGTH" + "/n";
-        for (int i = 1; i < list.size(); i++){
+        for (int i = 1; i < list.size(); i++) {
             record[i] = list.get(i).toString() + "/n";
         }
         writer.writeNext(record);
         writer.close();
     }
 
-    List<PointWaterPipeline> findResult(){
+    List<PointWaterPipeline> findResult() {
         List<PointWaterPipeline> listPointWaterPipelines = pointWaterPipelineService.findAll();
 
-        for (PointWaterPipeline pointWaterPipeline : listPointWaterPipelines){
+        for (PointWaterPipeline pointWaterPipeline : listPointWaterPipelines) {
             List<Integer> listLengths = new ArrayList<>();
             List<WaterPipeline> listWaterPipelines = waterPipelineService.findAll();
             int x = pointWaterPipeline.getX();
             int y = pointWaterPipeline.getY();
             int length;
-            for (WaterPipeline waterPipeline :listWaterPipelines){
-                if (waterPipeline.getX().equals(x)){
-                    for (int i = 0; i < listWaterPipelines.size(); i++){
+            for (WaterPipeline waterPipeline : listWaterPipelines) {
+                if (waterPipeline.getX().equals(x)) {
+                    for (int i = 0; i < listWaterPipelines.size(); i++) {
                         if (listWaterPipelines.get(i).getY().equals(waterPipeline.getY())
-                                && !listWaterPipelines.get(i).getId().equals(waterPipeline.getId())){
-                            if (listWaterPipelines.get(i).getY().equals(y)){
+                                && !listWaterPipelines.get(i).getId().equals(waterPipeline.getId())) {
+                            if (listWaterPipelines.get(i).getY().equals(y)) {
                                 listLengths.add(waterPipeline.getLength() + listWaterPipelines.get(i).getLength());
                                 pointWaterPipeline.setTrueFalse("TRUE;");
-                                listWaterPipelines.remove(listWaterPipelines.get(i));
-                            }else {
+                            } else {
                                 pointWaterPipeline.setTrueFalse("FALSE;");
                             }
                         }
                     }
                 }
             }
-            if (!listLengths.isEmpty()){
+            if (!listLengths.isEmpty()) {
                 pointWaterPipeline.setResult(minLength(listLengths));
             }
         }
         return listPointWaterPipelines;
     }
 
-    public String getResult(){
+    public String getResult() {
         List<String> points = new ArrayList<>();
-        for (PointWaterPipeline p : findResult()){
+        for (PointWaterPipeline p : findResult()) {
             points.add(p.toString());
         }
         StringBuilder stringBuilder = new StringBuilder();
-        for (String s : points){
-            stringBuilder.append(s);
+        for (String s : points) {
+            stringBuilder.append(s + "\n");
         }
         return stringBuilder.toString();
     }
 
-    Integer minLength(List<Integer> list){
+    Integer minLength(List<Integer> list) {
         int min = list.get(0);
-        for (Integer i : list){
-            if (i < min){
+        for (Integer i : list) {
+            if (i < min) {
                 min = i;
             }
         }
