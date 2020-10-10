@@ -24,22 +24,27 @@ public class WriteAndParsingCsv {
 
     public void writeToCsv() throws IOException {
         List<PointWaterPipeline> list = findResult();
-        String[] record = new String[list.size()];
+        String[] record = new String[list.size() + 1];
         String csv =
                 System.getProperty("user.dir") +
+                        System.getProperty("file.separator") +
+                        "src" +
                         System.getProperty("file.separator") +
                         "files" +
                         System.getProperty("file.separator") +
                         "result.csv";
         File file = new File(csv);
+        file.createNewFile();
         FileWriter fileWriter = new FileWriter(file);
-        CSVWriter writer = new CSVWriter(fileWriter);
-        record[0] = "ROUTE EXISTS;MIN LENGTH" + "/n";
-        for (int i = 1; i < list.size(); i++) {
-            record[i] = list.get(i).toString() + "/n";
+        CSVWriter writer = new CSVWriter(fileWriter, '\n', CSVWriter.NO_ESCAPE_CHARACTER
+                , CSVWriter.NO_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+        record[0] = "ROUTE EXISTS;MIN LENGTH";
+        for (int i = 1; i < list.size() + 1; i++) {
+            record[i] = list.get(i - 1).toString();
         }
         writer.writeNext(record);
         writer.close();
+        fileWriter.close();
     }
 
     List<PointWaterPipeline> findResult() {
@@ -89,14 +94,10 @@ public class WriteAndParsingCsv {
 
     public List<String> getResult() {
         List<String> points = new ArrayList<>();
-        for (PointWaterPipeline p : findResult()) {
-            points.add(p.toString());
+        points.add("ROUTE EXISTS;MIN LENGTH");
+        for (int i = 1; i < findResult().size() + 1; i++){
+            points.add(findResult().get(i - 1).toString());
         }
-//        StringBuilder stringBuilder = new StringBuilder();
-//        for (String s : points) {
-//            stringBuilder.append(s + "\n");
-//        }
-//        return stringBuilder.toString();
         return points;
     }
 
