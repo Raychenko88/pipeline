@@ -50,12 +50,20 @@ public class WriteAndParsingCsv {
             List<WaterPipeline> listWaterPipelines = waterPipelineService.findAll();
             int x = pointWaterPipeline.getX();
             int y = pointWaterPipeline.getY();
-            int length;
+
+            for (WaterPipeline waterPipeline : listWaterPipelines){
+                if (waterPipeline.getX().equals(x)){
+                    if (waterPipeline.getY().equals(y)){
+                        listLengths.add(waterPipeline.getLength());
+                        pointWaterPipeline.setTrueFalse("TRUE;");
+                        pointWaterPipeline.setResult(waterPipeline.getLength());
+                    }
+                }
+            }
             for (WaterPipeline waterPipeline : listWaterPipelines) {
                 if (waterPipeline.getX().equals(x)) {
                     for (int i = 0; i < listWaterPipelines.size(); i++) {
-                        if (listWaterPipelines.get(i).getY().equals(waterPipeline.getY())
-                                && !listWaterPipelines.get(i).getId().equals(waterPipeline.getId())) {
+                        if (listWaterPipelines.get(i).getX().equals(waterPipeline.getY())) {
                             if (listWaterPipelines.get(i).getY().equals(y)) {
                                 listLengths.add(waterPipeline.getLength() + listWaterPipelines.get(i).getLength());
                                 pointWaterPipeline.setTrueFalse("TRUE;");
@@ -67,22 +75,29 @@ public class WriteAndParsingCsv {
                 }
             }
             if (!listLengths.isEmpty()) {
-                pointWaterPipeline.setResult(minLength(listLengths));
+                if (pointWaterPipeline.getResult() != null){
+                    if (pointWaterPipeline.getResult() > minLength(listLengths)){
+                        pointWaterPipeline.setResult(minLength(listLengths));
+                    }
+                }else {
+                    pointWaterPipeline.setResult(minLength(listLengths));
+                }
             }
         }
         return listPointWaterPipelines;
     }
 
-    public String getResult() {
+    public List<String> getResult() {
         List<String> points = new ArrayList<>();
         for (PointWaterPipeline p : findResult()) {
             points.add(p.toString());
         }
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String s : points) {
-            stringBuilder.append(s + "\n");
-        }
-        return stringBuilder.toString();
+//        StringBuilder stringBuilder = new StringBuilder();
+//        for (String s : points) {
+//            stringBuilder.append(s + "\n");
+//        }
+//        return stringBuilder.toString();
+        return points;
     }
 
     Integer minLength(List<Integer> list) {

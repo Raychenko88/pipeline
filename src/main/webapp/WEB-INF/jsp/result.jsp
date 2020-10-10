@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -7,11 +6,16 @@
     <title>Result Page</title>
 </head>
 <body>
-<h2>In the file path, the file name must end with .tsv</h2>
+<h2>Result</h2>
+<br>
+<c:forEach var="movie" items="${message}">
+    ${movie}
     <br>
-    <h3><c:out value="${message}" default="Result"/></h3>
-    <br>
-    <a href="/">Go to start</a>
+</c:forEach>
+</table>
+
+<br>
+<a href="/">Go to start</a>
 <br>
 </body>
 </html>
