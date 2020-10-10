@@ -55,8 +55,8 @@ public class ReadingAndParsingCsv {
         try {
             if (checkFileName(file).equals("csv")) {
                 CSVReader reader = new CSVReader(new FileReader(file.getAbsolutePath()));
-                //Read CSV line by line and use the string array as you want
                 String[] nextLine;
+                reader.readNext();
                 while ((nextLine = reader.readNext()) != null) {
                     if (nextLine != null) {
                         for (String retval : nextLine) {
@@ -73,12 +73,9 @@ public class ReadingAndParsingCsv {
 
     private String checkFileName(File file) throws Exception {
         String fileName = file.getName();
-        // если в имени файла есть точка и она не является первым символом в названии файла
         if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0) {
-            // то вырезаем все знаки после последней точки в названии файла, то есть ХХХХХ.txt -> txt
             return fileName.substring(fileName.lastIndexOf(".") + 1);
         }
-        // в противном случае возвращаем заглушку, то есть расширение не найдено
         else throw new Exception("This is not a csv file");
     }
 }

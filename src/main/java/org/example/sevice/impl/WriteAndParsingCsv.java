@@ -45,6 +45,12 @@ public class WriteAndParsingCsv {
         writer.writeNext(record);
         writer.close();
         fileWriter.close();
+        for (WaterPipeline w : waterPipelineService.findAll()){
+            waterPipelineService.delete(w);
+        }
+        for (PointWaterPipeline p : pointWaterPipelineService.findAll()){
+            pointWaterPipelineService.delete(p);
+        }
     }
 
     List<PointWaterPipeline> findResult() {
