@@ -23,6 +23,6 @@ public class PointWaterPipeline {
 
     @Override
     public String toString() {
-        return getTrueFalse() + (getResult()==null ? "" :  getResult().toString());
+        return getTrueFalse() + (getResult() == null ? "" : getResult().toString());
     }
 }

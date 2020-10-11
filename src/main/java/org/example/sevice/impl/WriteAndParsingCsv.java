@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -45,10 +44,10 @@ public class WriteAndParsingCsv {
         writer.writeNext(record);
         writer.close();
         fileWriter.close();
-        for (WaterPipeline w : waterPipelineService.findAll()){
+        for (WaterPipeline w : waterPipelineService.findAll()) {
             waterPipelineService.delete(w);
         }
-        for (PointWaterPipeline p : pointWaterPipelineService.findAll()){
+        for (PointWaterPipeline p : pointWaterPipelineService.findAll()) {
             pointWaterPipelineService.delete(p);
         }
     }
@@ -62,9 +61,9 @@ public class WriteAndParsingCsv {
             int x = pointWaterPipeline.getX();
             int y = pointWaterPipeline.getY();
 
-            for (WaterPipeline waterPipeline : listWaterPipelines){
-                if (waterPipeline.getX().equals(x)){
-                    if (waterPipeline.getY().equals(y)){
+            for (WaterPipeline waterPipeline : listWaterPipelines) {
+                if (waterPipeline.getX().equals(x)) {
+                    if (waterPipeline.getY().equals(y)) {
                         listLengths.add(waterPipeline.getLength());
                         pointWaterPipeline.setTrueFalse("TRUE;");
                         pointWaterPipeline.setResult(waterPipeline.getLength());
@@ -86,11 +85,11 @@ public class WriteAndParsingCsv {
                 }
             }
             if (!listLengths.isEmpty()) {
-                if (pointWaterPipeline.getResult() != null){
-                    if (pointWaterPipeline.getResult() > minLength(listLengths)){
+                if (pointWaterPipeline.getResult() != null) {
+                    if (pointWaterPipeline.getResult() > minLength(listLengths)) {
                         pointWaterPipeline.setResult(minLength(listLengths));
                     }
-                }else {
+                } else {
                     pointWaterPipeline.setResult(minLength(listLengths));
                 }
             }
@@ -101,7 +100,7 @@ public class WriteAndParsingCsv {
     public List<String> getResult() {
         List<String> points = new ArrayList<>();
         points.add("ROUTE EXISTS;MIN LENGTH");
-        for (int i = 1; i < findResult().size() + 1; i++){
+        for (int i = 1; i < findResult().size() + 1; i++) {
             points.add(findResult().get(i - 1).toString());
         }
         return points;

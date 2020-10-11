@@ -6,7 +6,6 @@ import org.example.model.WaterPipeline;
 import org.example.sevice.WaterPipelineService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

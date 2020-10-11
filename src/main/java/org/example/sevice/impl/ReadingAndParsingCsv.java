@@ -15,9 +15,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReadingAndParsingCsv {
 
-    List<WaterPipeline> getWaterPipeline(String filePath){
+    List<WaterPipeline> getWaterPipeline(String filePath) {
         List<WaterPipeline> waterPipelines = new ArrayList<>();
-        for (String str : readingAndParsing(filePath)){
+        for (String str : readingAndParsing(filePath)) {
             List<String> list = new ArrayList<>();
             for (String value : str.split(";")) {
                 list.add(value);
@@ -32,9 +32,9 @@ public class ReadingAndParsingCsv {
         return waterPipelines;
     }
 
-    List<PointWaterPipeline> getPointWaterPipeline(String filePath){
+    List<PointWaterPipeline> getPointWaterPipeline(String filePath) {
         List<PointWaterPipeline> pointWaterPipelines = new ArrayList<>();
-        for (String str : readingAndParsing(filePath)){
+        for (String str : readingAndParsing(filePath)) {
             List<String> list = new ArrayList<>();
             for (String value : str.split(";")) {
                 list.add(value);
@@ -49,7 +49,7 @@ public class ReadingAndParsingCsv {
     }
 
 
-    List<String> readingAndParsing(String filePath){
+    List<String> readingAndParsing(String filePath) {
         List<String> list = new ArrayList<>();
         File file = new File(filePath);
         try {
@@ -75,7 +75,6 @@ public class ReadingAndParsingCsv {
         String fileName = file.getName();
         if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0) {
             return fileName.substring(fileName.lastIndexOf(".") + 1);
-        }
-        else throw new Exception("This is not a csv file");
+        } else throw new Exception("This is not a csv file");
     }
 }
