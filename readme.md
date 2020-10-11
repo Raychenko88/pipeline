@@ -10,3 +10,5 @@ url: jdbc: h2: ~ / pipeline
  <hr>
 Water Pipeline and point data files must be saved on the same computer where the application is used.
 In the form, you need to specify the absolute path to the file and put the extension - .csv after the file name.
+<hr>
+The file with the results is saved to the files folder.
